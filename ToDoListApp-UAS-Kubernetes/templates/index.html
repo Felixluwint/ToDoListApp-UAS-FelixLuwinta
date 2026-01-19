@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo List App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>📝 ToDo List App</h1>
+
+    <form method="POST" class="task-form">
+        <input type="text" name="task" placeholder="Tambahkan task baru..." required>
+        <button type="submit">Tambah</button>
+    </form>
+
+    <div class="filters">
+        <a href="/?filter=all" class="{{ 'active' if filter_type == 'all' else '' }}">All</a>
+        <a href="/?filter=pending" class="{{ 'active' if filter_type == 'pending' else '' }}">Pending</a>
+        <a href="/?filter=completed" class="{{ 'active' if filter_type == 'completed' else '' }}">Completed</a>
+    </div>
+
+    {% if tasks|length == 0 %}
+        <p class="empty">Belum ada task.</p>
+    {% endif %}
+
+    <ul class="task-list">
+        {% for task in tasks %}
+        <li class="{{ 'done' if task.done }}">
+            <span>{{ task.text }}</span>
+            <small>{{ task.created_at }}</small>
+            <div class="actions">
+                <a href="/toggle/{{ task.id }}">✔</a>
+                <a href="/delete/{{ task.id }}">🗑</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
