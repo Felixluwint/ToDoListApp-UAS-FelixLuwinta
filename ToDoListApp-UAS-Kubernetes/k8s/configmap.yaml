@@ -1,7 +1,0 @@
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: todo-config
-data:
-  FLASK_ENV: "production"
